@@ -15,11 +15,11 @@ submitBttn.addEventListener('click', function() {
         Year: `${yearInp.value}`,
         Poster: `${imgInp.value}`,
     }
-    movies.push(newMovie)
+    movies.unshift(newMovie)
     displayMovies()
 })
 
-//
+//display movies function
 
 function displayMovies() {
     moviesUl.innerHTML = ''
@@ -33,6 +33,9 @@ function displayMovies() {
     })
     moviesUl.innerHTML += display.join('')
 }
+
+//delete movie function
+
 function deleteFunction(movie) {
     let  deleteFilter = movies.filter((item)=> (item.Title !== movie)) 
     movies = deleteFilter
