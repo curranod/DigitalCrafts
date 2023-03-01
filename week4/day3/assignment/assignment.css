@@ -26,23 +26,23 @@ body {
     animation: slideInLeft 1s ease-in-out;
   }
   
-  input[type="text"] {
+  input[id="citySearch"] {
     padding: 1rem;
     font-size: 1.2rem;
     border: none;
     border-bottom: 2px solid #ccc;
-    background-color: hsl(0, 0%, 50%);
+    background-color: hsl(0, 12%, 90%);
     border-radius: 0;
     transition: all 0.3s ease-in-out;
   }
   
-  input[type="text"]:focus {
+  input[id="citySearch"]:focus {
     outline: none;
     border-bottom: 2px solid #008cba;
-    background-color: hsl(0, 0%, 35%);
+    background-color: hsl(315, 62%, 75%);
   }
   
-  button[type="submit"] {
+  button[id="citySearchBttn"] {
     padding: 1rem 2rem;
     font-size: 1.2rem;
     background-color: #008cba;
@@ -53,7 +53,7 @@ body {
     transition: all 0.3s ease-in-out;
   }
   
-  button[type="submit"]:hover {
+  button[id="citySearchBttn"]:hover {
     background-color: #00709f;
   }
   
@@ -111,4 +111,4 @@ body {
     to {
       transform: translateY(0);
       opacity: 1;
-    }
+    }}
