@@ -1,0 +1,114 @@
+body {
+    font-family: "Montserrat", sans-serif;
+    color: #222;
+    background-color: hsl(0, 0%, 35%);
+  }
+  
+  h1 {
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    animation: slideInLeft 1s ease-in-out;
+  }
+  
+  input[type="text"] {
+    padding: 1rem;
+    font-size: 1.2rem;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    background-color: hsl(0, 0%, 50%);
+    border-radius: 0;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  input[type="text"]:focus {
+    outline: none;
+    border-bottom: 2px solid #008cba;
+    background-color: hsl(0, 0%, 35%);
+  }
+  
+  button[type="submit"] {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    background-color: #008cba;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #00709f;
+  }
+  
+  #weatherUl, #searchedUl, #yourUl {
+    border: none;
+    border-radius: 4px;
+    padding: 2rem;
+    margin-bottom: 4rem;
+    background-color: hsl(0, 0%, 100%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    animation: slideInUp 1s ease-in-out;
+  }
+#search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  #citySearch {
+    padding: 10px;
+    border-radius: 5px;
+    border: 10px;
+    font-size: 16px;
+    width: 200px;
+    margin-bottom:20px
+  }
+  
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
