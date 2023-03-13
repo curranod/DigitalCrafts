@@ -1,5 +1,6 @@
 const movieList = document.getElementById('movieList')
 const movieCard = document.getElementById('movieCard')
+
 const request = new XMLHttpRequest
 
 function generateRoster() {
@@ -9,7 +10,7 @@ request.addEventListener('load', function() {
     let movieItems = movie.map((m) => {
         return `
         <div id="movieCard">
-            <a onclick="generateCard('${m.imdbID}')">
+            <a onmouseover="generateCard('${m.imdbID}')">
             <img src="${m.Poster}" id = "poster">
             <p id= "Title">${m.Title}</p>
             </a>
@@ -37,7 +38,7 @@ function generateCard(imdbID) {
                 <p>Year: ${parsed.Year}</p>
                 <p>Rated: ${parsed.Rated}</p>
                 <p>Released: ${parsed.Released}</p>
-                <p>${parsed.Director}</p>
+                <p>Director:${parsed.Director}</p>
             </div>
         </div>
         `;

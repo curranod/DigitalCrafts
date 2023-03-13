@@ -14,7 +14,7 @@ async function getArticles(articleId) {
 
     const story = `
     <h1> ${article.title}</h1>
-    <a href="${article.url}">Article link</a>
+    <a href="${article.url}" target=_>Article link</a>
     <li>By: ${article.by}</li>
     <li>date: ${date.toLocaleDateString('en-US')}</li>
     `
