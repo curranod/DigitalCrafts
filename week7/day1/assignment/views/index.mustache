@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=[device-width], initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<form method = "POST" action = "/add-blog">
+    <input type = "text" placeholder = "title" name = "title" />
+    <input type = "text" placeholder = "body" name = "body" />
+    <button>Add Blog</button>
+    <ul>
+    {{#blog}}
+    <li>
+    <form method = "POST" action = "/delete-blog">
+    <b>{{title}}</b> - {{created_at}}
+    <li>{{body}}</li>
+    <input type = "hidden" name = "blogId" value = {{id}} />
+    <button>Delete</button>
+    </form>
+    </li>
+{{/blog}}
+    </ul>
+</body>
+</html>
