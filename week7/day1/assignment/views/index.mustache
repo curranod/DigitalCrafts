@@ -11,14 +11,24 @@
     <input type = "text" placeholder = "title" name = "title" />
     <input type = "text" placeholder = "body" name = "body" />
     <button>Add Blog</button>
+</form>
     <ul>
     {{#blog}}
     <li>
     <form method = "POST" action = "/delete-blog">
-    <b>{{title}}</b> - {{created_at}}
-    <li>{{body}}</li>
-    <input type = "hidden" name = "blogId" value = {{id}} />
-    <button>Delete</button>
+        <b>{{title}}</b> - {{created_at}}
+        <li>{{body}}</li>
+        <input type = "hidden" name = "blogId" value = {{id}} />
+        <button>Delete</button>
+    </form>
+    <form action='/post-details' method="post">
+        <input type = "hidden" name = "id" value = {{id}} />
+        <button>view details</button>
+    </form>
+    <form action='/add-comment' method='post'>
+    <input type = 'text' name = 'comment'>
+    <input type="hidden" name="post_id" value={{id}}>
+    <button>submit</button>
     </form>
     </li>
 {{/blog}}
