@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<form action='filter' method='post'>
+<button name=filterbutton>filter by category</button>
+<select name="categories" id="categories">
+    <option value="python">python</option>
+    <option value="javascript">javascript</option>
+    <option value="ios">ios</option>
+    <option value="android">android</option>
+    </select>
+    </form>
+<form action="/index">
+    <button>viewall</button>
+</form>
+<h1>posts</h1>
+<form method = "POST" action = "/add-blog">
+    <input type = "text" placeholder = "title" name = "title" />
+    <input type = "text" placeholder = "body" name = "body" />
+    <select name="categories" id="categories">
+    <option value="python">python</option>
+    <option value="javascript">javascript</option>
+    <option value="ios">ios</option>
+    <option value="android">android</option>
+    </select>
+    <button>Add Blog</button>
+</form>
+    <ul>
+        {{#posts}}
+        <li>
+            <form method = "POST" action = "/delete-post">
+                <b>{{title}}</b> - {{created_at}}
+                <li>{{body}}</li>
+                <li>{{category}}</li>
+                <input type = "hidden" name = "id" value = {{id}} />
+                <button>Delete</button>
+            </form>
+            <form action='/post-details' method="post">
+                <input type = "hidden" name = "id" value = {{id}} />
+                <button>view details</button>
+            </form>
+            <form action='/add-comment' method='post'>
+                <input type = 'text' placeholder= 'write a commment!' name = 'comment'>
+                <input type="hidden" name="post_id" value={{id}}>
+                <button>submit</button>
+            </form>
+            <div>------------------------------------------------------------------</div>
+        </li>
+        {{/posts}}
+    </ul>
+</body>
+</html>
