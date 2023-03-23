@@ -14,8 +14,32 @@ app.use(session({
     saveUninitialized: false
 }))
 
+app.post('/add-comment', async (req, res) => {
+    const comment = models.Comment.build({
+        title: req.body.comment_title,
+        body: req.body.comment_body,
+        post_id: parseInt(req.body.post_id)
+    })
+    await comment.save()
+    res.redirect('/index')
+})
+
+app.post('/delete-comment', async (req, res) => {
+    await models.Comment.destroy({
+        where: {
+            id: parseInt(req.body.comment_id)
+        }
+    })
+    res.redirect('/index')
+})
+
 app.get('/index', async(req, res) => {
-    const posts = await models.Post.findAll({})
+    const posts = await models.Post.findAll({
+        include: [
+            {model: models.Comment, 
+            as: 'comments'}
+        ]
+    })
     res.render('index', {posts: posts})
 })
 
