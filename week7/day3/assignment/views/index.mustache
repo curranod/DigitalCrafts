@@ -6,68 +6,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
+
+<form action="/chat">
+<button>enter chatroom</button>
+</form>
+
 <form action='filter' method='post'>
-<button name=filterbutton>filter by category</button>
-<select name="categories" id="categories">
-    <option value="python">python</option>
-    <option value="javascript">javascript</option>
-    <option value="ios">ios</option>
-    <option value="android">android</option>
+    <button name=filterbutton>filter by category</button>
+    <select name="categories" id="categories">
+        <option value="python">python</option>
+        <option value="javascript">javascript</option>
+        <option value="ios">ios</option>
+        <option value="android">android</option>
     </select>
-    </form>
+</form>
+
 <form action="/index">
     <button>viewall</button>
 </form>
+
 <h1>posts</h1>
+
+<form action="/search" method="post">
+<input type="text" name="search" placeholder="search">
+<button>submit</button>
+</form>
+
+<form action="/sort" method='post'>
+    <select name="sort">
+        <option value="oldNew">Oldest to Newest</option>
+        <option value="newOld">Newest to Oldest</option>
+    </select>
+    <button>sort</button>
+</form>
+
 <form method = "POST" action = "/add-blog">
     <input type = "text" placeholder = "title" name = "title" />
     <input type = "text" placeholder = "body" name = "body" />
-    <select name="categories" id="categories">
-    <option value="python">python</option>
-    <option value="javascript">javascript</option>
-    <option value="ios">ios</option>
-    <option value="android">android</option>
-    </select>
+        <select name="categories" id="categories">
+            <option value="python">python</option>
+            <option value="javascript">javascript</option>
+            <option value="ios">ios</option>
+            <option value="android">android</option>
+        </select>
     <button>Add Blog</button>
 </form>
-    <ul>
-        {{#posts}}
-        <li>
-            <form method = "POST" action = "/delete-post">
-                <b>{{title}}</b> - {{created_at}}
-                <li>{{body}}</li>
-                <li>{{category}}</li>
-                <input type = "hidden" name = "id" value = {{id}} />
-                <button>Delete</button>
+
+<ul>
+    {{#posts}}
+    <li>
+        <form method = "POST" action = "/delete-post">
+            <b>{{title}}</b> - {{created_at}}
+            <li>{{body}}</li>
+            <li>{{category}}</li>
+            <input type = "hidden" name = "id" value = {{id}} />
+            <button>Delete</button>
+        </form>
+        <form action='/post-details' method="post">
+            <input type = "hidden" name = "id" value = {{id}} />
+            <button>view details</button>
+        </form>
+        <form action='/add-comment' method='post'>
+            <div>add a comment</div>
+            <input type = 'text' placeholder= 'title' name = 'comment_title'>
+            <input type = 'text' placeholder= 'body' name = 'comment_body'>
+            <input type="hidden" name="post_id" value={{id}}>
+            <button>submit</button>
+        </form>
+        <div>------------------------------------------------------------------</div>
+    </li>
+    <div>COMMENTS</div>
+        <ul>
+            
+            {{#comments}}
+            <form action="/delete-comment" method="post">
+            <li>{{title}} - {{body}}</li>
+            <input type="hidden" name="comment_id" value={{id}}>
+            <button>Delete</button>
             </form>
-            <form action='/post-details' method="post">
-                <input type = "hidden" name = "id" value = {{id}} />
-                <button>view details</button>
-            </form>
-            <form action='/add-comment' method='post'>
-                <div>add a comment</div>
-                <input type = 'text' placeholder= 'title' name = 'comment_title'>
-                <input type = 'text' placeholder= 'body' name = 'comment_body'>
-                <input type="hidden" name="post_id" value={{id}}>
-                <button>submit</button>
-            </form>
-            <div>------------------------------------------------------------------</div>
-        </li>
-        <div>COMMENTS</div>
-            <ul>
-                
-                {{#comments}}
-                <form action="/delete-comment" method="post">
-                <li>{{title}} - {{body}}</li>
-                <input type="hidden" name="comment_id" value={{id}}>
-                <button>Delete</button>
-                </form>
-                {{/comments}}
-                
-            </ul>
-            <div>------------------------------------------------------------------</div>
-        {{/posts}}
-    </ul>
+            {{/comments}}
+            
+        </ul>
+        <div>------------------------------------------------------------------</div>
+    {{/posts}}
+</ul>
 </body>
 </html>

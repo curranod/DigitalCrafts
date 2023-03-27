@@ -8,11 +8,48 @@ app.engine('mustache', mustacheExpress())
 app.set('views', './views')
 app.set('view engine', 'mustache')
 app.use(express.urlencoded())
+const { Op } = require('sequelize');
+const http = require('http').Server(app)
+const io = require('socket.io')(http)
+app.use(express.static('js'))
 
 app.use(session({
     secret: 'THISCANBEANYTHING',
     saveUninitialized: false
 }))
+
+let chatMessages = []
+
+io.on('connection', (socket) => {
+    console.log('User connected...')
+    // server can send a message to the connected user 
+    io.emit('general-Joined', chatMessages)
+
+    // listen for general channel 
+    socket.on('general', chat => {
+        //chat.dateCreated = Date() 
+        chatMessages.push(chat)
+        io.emit('general', chat)
+    })
+})
+
+app.get('/chat', async (req, res) => {
+    res.sendFile(__dirname + '/js/chat.html')
+})
+
+app.post('/search', async (req, res) => {
+    const query = req.body.search;
+    const posts = await models.Post.findAll({
+        where: {
+            [Op.or]: [
+                {title: {[Op.iLike]: `%${query}%`}},
+                {body: {[Op.iLike]: `%${query}%`}}
+            ]
+        },
+        include: [{model: models.Comment, as: 'comments'}]
+    });
+    res.render('index', {posts}); 
+})
 
 app.post('/add-comment', async (req, res) => {
     const comment = models.Comment.build({
@@ -42,6 +79,34 @@ app.get('/index', async(req, res) => {
     })
     res.render('index', {posts: posts})
 })
+
+app.post("/sort", async (req, res) => {
+    if (req.body.sort === "oldNew") {
+      const posts = await models.Post.findAll({
+        include: {
+          model: models.Comment,
+          as: "comments",
+        },
+        order: [["createdAt", "DESC"]],
+      });
+      res.render("index", {
+        posts: posts,
+      });
+    }
+  
+    if (req.body.sort === "newOld") {
+      const posts = await models.Post.findAll({
+        include: {
+          model: models.Comment,
+          as: "comments",
+        },
+        order: [["createdAt", "ASC"]],
+      });
+      res.render("index", {
+        posts: posts,
+      });
+    }
+  });
 
 app.post('/add-blog', async(req, res) => {
     const newPost = await models.Post.build({
@@ -83,6 +148,6 @@ app.post('/filter', async (req,res) => {
     res.render('index', {posts: filteredArr})
 })
 
-app.listen(8080, () => {
+http.listen(8080, () => {
     console.log('server is running on http://localhost:8080')
 })
