@@ -22,12 +22,8 @@ let chatMessages = []
 
 io.on('connection', (socket) => {
     console.log('User connected...')
-    // server can send a message to the connected user 
     io.emit('general-Joined', chatMessages)
-
-    // listen for general channel 
     socket.on('general', chat => {
-        //chat.dateCreated = Date() 
         chatMessages.push(chat)
         io.emit('general', chat)
     })

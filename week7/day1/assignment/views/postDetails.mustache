@@ -20,7 +20,11 @@
     </li>
     {{#comments}}
     <div>{{body}}</div>
-
+    <form action="/delete-comment" method="POST">
+        <input type="hidden" name="commentId" value="{{id}}" />
+        <button>Delete</button>
+        <div>----------------------------------------------</div>
+    </form>
     {{/comments}}
 {{/post}}
     </ul>

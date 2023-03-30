@@ -1,13 +1,12 @@
 const express = require('express')
 const mustacheExpress = require('mustache-express')
 const app = express()
-const mongoose = require('mongoose')
-const Task = require('./schemas/task')
 app.use(express.urlencoded())
 app.engine('mustache', mustacheExpress())
 app.set('views', './views')
 app.set('view engine', 'mustache')
-
+const mongoose = require('mongoose')
+const Task = require('./schemas/task')
 
 
 mongoose.connect('mongodb+srv://curranod840:zSfsG5c5SeoIaPpT@cluster.8cz7y6f.mongodb.net/?retryWrites=true&w=majority',

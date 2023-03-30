@@ -40,9 +40,6 @@ app.post('/addTrip', (req, res) => {
     res.redirect('/')
 })
 
-
-
-
 app.listen(8080, () => {
     console.log('server is running on http://localhost:8080')
 })

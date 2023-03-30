@@ -1,0 +1,24 @@
+npm install pg-promise
+const pgp = require('pg-promise')()
+const connectionString = url of your sql
+const db = pgp(connectionString)
+//db object kind of like app. except for th database
+in beekeeper u have to write code to fetch data in the '<> query' tab
+//SELECT id, name, year, FROM movies
+type "db.any('SELECT id, name, year, FROM movies')" into your get request
+if you add another movie it will update automatically
+use any if u are expecting an array of something
+
+ADDING A MOVIE
+
+start with regular post request
+in beekeeper '<>query': INSERT INTO movies(name, year)
+in post request: db.none/one('INSERT INTO movies(name, year) VALUES($1,$2)' , [movieName, movieYear])
+
+DELETE
+
+in <> query on beekeeper: DELETE id, name, year FROM movies WHERE movie id = x
+app.post('/delete-movie', async (req, res) => {
+const movieId = parseInt(req.body.movieId)
+await db.none('INSERT INTO
+})

@@ -14,6 +14,7 @@ function displayTasks() {
             <div>${task.priority}</div>
             <div>${task.date}</div>
             <button onclick="deleteTask(${index})">delete</button>
+            <button onclick="editTask(${index})">Edit</button>
             `
         })
         todoList.innerHTML = showtasks.join('')
@@ -44,6 +45,29 @@ submit.addEventListener('click', () => {
     displayTasks()
 })
 
+async function editTask(index) {
+    const response = await fetch(`http://localhost:8080/todo/${index}`)
+    const task = await response.json()
+    let editForm = `
+    <label>Update ${index.title}: </label>
+    <input id="updatedTitle">
+    <input id="updatedPriority">
+    <input id="updatedDate">
+    <button id="updateBttn"> 
+    `
+    const updatedTitle = document.getElementById("updatedTitle")
+    const updatedPriority = document.getElementById("updatedPriority")
+    const updatedDate = document.getElementById("updatedDate")
+    const updateBttn = document.getElementById("updateBttn")
+
+    updateBttn.addEventListener('click', ()=> {
+        const updatedBody = {
+            title: updatedTitle.value,
+            priority: updatedPriority.value,
+            date: updatedDate.value
+        }
+    })
+}
 async function deleteTask(index) {
     const response = await fetch(`http://localhost:8080/todo/${index}`, {
       method: 'DELETE'

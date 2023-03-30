@@ -24,6 +24,13 @@ app.delete('/todo/:id', (req, res) => {
     tasks.splice(id, 1);
       res.status(200).json({ success: true, message: 'Task deleted successfully.' });
 });
+
+app.put('/todo/:id', (req, res) => {
+    const id = req.params.id;
+    const updatedTask = req.body;
+    tasks[id] = updatedTask;
+    res.status(200).json({ success: true, message: 'Task updated successfully.' });
+});
   
 
 app.listen(8080, () => {
