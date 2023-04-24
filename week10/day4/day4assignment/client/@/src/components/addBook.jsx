@@ -1,47 +1,44 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react";
 
 function AddBook() {
-    const navigate = useNavigate()
 
-    const[newBook, setNewBook] = useState({
-        title: "",
-        genre: "",
-        publisher: "",
-        year: 0,
-        imageURL: "",
+    const [bookInfo, setBookInfo] = useState({
+        bookTitle: "",
+        bookGenre: "",
+        bookYear: "",
+        bookImageUrl: ""
     })
 
-    const captureInput = (e) => {
-        const { name, value } = e.target
+    const handleInput = (e) => {
+        setBookInfo ({
+            ...bookInfo,
+            [e.target.name]: e.target.value
+        })
+    }
 
-        setNewBook((prevNewBook) => ({
-            ...prevNewBook,
-            [name]: value,
-        }))
+    const sendState = async () => {
+        await fetch ('http://localhost:8080/api/add-book',
+        {
+            method: 'POST',
+            headers: {
+                "content-type": "application/json"
+            }, 
+            body: JSON.stringify(bookInfo)
+        }) 
         
     }
 
-    const addBook = async () => {
-        const response = await fetch('http://localhost:8080/api/books', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(newBook)
-        })
-        console.log(response)
-        navigate('/')
-    }
-
-    return(
+    return (
         <>
-            <input type="text" placeholder="title" name="title" onChange={captureInput}/>
-            <input type="text" placeholder="genre" name="genre" onChange={captureInput}/>
-            <input type="text" placeholder="publisher" name="publisher" onChange={captureInput}/>
-            <input type="number" placeholder="year" name="year" onChange={captureInput}/>
-            <input type="text" placeholder="imageURL" name="imageURL" onChange={captureInput}/>
-            <button onClick={addBook}>Add Book</button>
+        <h1>
+            Hello
+        </h1>
+        <input type="text" placeholder="title" name="bookTitle" onChange = {handleInput} />
+        <input type="text" placeholder="genre" name="bookGenre" onChange = {handleInput} />
+        <input type="text" placeholder="Publisher" name="bookPublisher" onChange = {handleInput} />
+        <input type="text" placeholder="Year" name="bookYear" onChange = {handleInput} />
+        <input type="text" placeholder="IMageUrl" name="bookImageUrl" onChange = {handleInput} />
+        <button onClick = {sendState}>submit</button>
         </>
     )
 }

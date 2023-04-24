@@ -1,25 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import BaseLayout from './BaseLayout'
-import AddBook from './components/AddBook'
-import Login from './components/Login'
-import Signup from './components/Signup'
+import './index.css'
+import { createStore } from "redux";
+import reducer from "./store/reducer";
+import { Provider } from "react-redux";
+
+const store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-      <BaseLayout>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/add-book" element={<AddBook />} />
-        </Routes>
-      </BaseLayout>
-    </BrowserRouter>
-  </React.StrictMode>,
+    <Provider store={store}>
+      <App />
+    </Provider >
+  </React.StrictMode>
 )
