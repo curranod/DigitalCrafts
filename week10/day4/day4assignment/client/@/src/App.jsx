@@ -17,14 +17,37 @@ function App(props) {
     setBooks(result)
   }
 
+  const handleDeleteBook = async (bookid) => {
+    const response = await fetch(`http://localhost:8080/api/books/${bookid}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log(result);
+  };
+
+  const handleUpdateBook = async () => {
+    const response = await fetch("http://localhost:8080/api/books", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    await response.json();
+  };
+
   const bookItems = books.map((book) => {
     return (
-      <li key = {book._id}>
+      <li key = {book.id}>
         <h1>{book.bookTitle}</h1>
         <b>genre: {book.bookGenre}</b>
         <br></br>
         <img src = {book.bookImageURL} />
         <button onClick={() => props.addToCart(book)}>add2cart</button>
+        <button onClick={() => handleDeleteBook(book.id)}>Delete Book</button>
+        <button onClick={handleUpdateBook}>Update Book</button>
       </li>
     )
   })
@@ -44,6 +67,7 @@ const mapStateToProps = (state) => {
     cartCount: state.cart.length,
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
       addToCart: (book) => dispatch({type: 'BOOKS', payload: book})

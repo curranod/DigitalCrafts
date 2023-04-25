@@ -38,6 +38,27 @@ app.get('/api/books', async (req, res) => {
     res.json(books)
 })
 
+app.delete("/api/books/:bookid", (req, res) => {
+    const id = req.params.bookid;
+    const bookIndex = Book.findOneAndDelete({_id: id})
+      res.send(bookIndex)
+    });
+
+  app.post("/api/post/update", (req, res) => {
+    const title = req.body.title;
+    const author = req.body.author;
+    const country = req.body.country;
+    const imgsrc = req.body.imgsrc;
+  
+    const book = {
+      id: books.length + 1,
+      title: title,
+      author: author,
+      country: country,
+      imgsrc: imgsrc,
+    };
+  });
+
 app.listen(8080, () => {
     console.log('server running ')
 })
