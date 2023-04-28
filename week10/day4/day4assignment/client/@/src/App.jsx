@@ -1,6 +1,7 @@
 import { connect } from "react-redux"
 import { useState, useEffect } from 'react'
-import AddBook from './components/addBook'
+import { Link } from "react-router-dom";
+import AddPage from "./components/AddPage";
 // import * as actionCreators from "./store/creators/actionCreators";
 
 
@@ -28,26 +29,20 @@ function App(props) {
     console.log(result);
   };
 
-  const handleUpdateBook = async () => {
-    const response = await fetch("http://localhost:8080/api/books", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    await response.json();
-  };
+  
 
   const bookItems = books.map((book) => {
     return (
-      <li key = {book.id}>
+      <li key = {book._id}>
         <h1>{book.bookTitle}</h1>
         <b>genre: {book.bookGenre}</b>
-        <br></br>
+        <br></br> 
         <img src = {book.bookImageURL} />
         <button onClick={() => props.addToCart(book)}>add2cart</button>
-        <button onClick={() => handleDeleteBook(book.id)}>Delete Book</button>
-        <button onClick={handleUpdateBook}>Update Book</button>
+        <button onClick={() => handleDeleteBook(book._id)}>Delete Book</button>
+        <Link to={`/update-book/${book._id}/${book.bookTitle}/${book.bookGenre}/${book.bookPublisher}/${book.bookYear}`}>
+          <button >Update</button>
+        </Link>
       </li>
     )
   })
@@ -55,7 +50,7 @@ function App(props) {
   return (
     <>
     <h1>Books</h1>
-    <AddBook />
+      <AddPage/>
       <ul>{bookItems}</ul>
       <h4>Total Number of Items in Cart: {props.cartCount}</h4>
     </>

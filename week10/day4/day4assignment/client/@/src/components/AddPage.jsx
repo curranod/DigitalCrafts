@@ -24,7 +24,7 @@ function AddBook() {
                 "content-type": "application/json"
             }, 
             body: JSON.stringify(bookInfo)
-        }) 
+        })
         
     }
 
@@ -37,7 +37,7 @@ function AddBook() {
         <input type="text" placeholder="genre" name="bookGenre" onChange = {handleInput} />
         <input type="text" placeholder="Publisher" name="bookPublisher" onChange = {handleInput} />
         <input type="text" placeholder="Year" name="bookYear" onChange = {handleInput} />
-        <input type="text" placeholder="IMageUrl" name="bookImageUrl" onChange = {handleInput} />
+        {/* <input type="text" placeholder="IMageUrl" name="bookImageUrl" onChange = {handleInput} /> */}
         <button onClick = {sendState}>submit</button>
         </>
     )

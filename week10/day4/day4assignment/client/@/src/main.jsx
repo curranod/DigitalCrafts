@@ -1,10 +1,13 @@
 import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 import { createStore } from "redux";
 import reducer from "./store/reducer";
 import { Provider } from "react-redux";
+import AddPage from './components/AddPage'
+import Updater from './components/Updater'
 
 const store = createStore(
   reducer,
@@ -14,7 +17,13 @@ const store = createStore(
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/add-book" element={<AddPage />} />
+          <Route path="/update-book/:_id/:title/:genre/:publisher/:year" element={< Updater />} />
+        </Routes>
+      </BrowserRouter>
     </Provider >
   </React.StrictMode>
 )

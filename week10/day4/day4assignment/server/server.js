@@ -20,7 +20,7 @@ app.post('/api/add-book', async (req,res) => {
     const bookGenre = req.body.bookGenre
     const bookPublisher = req.body.bookPublisher
     const bookYear = req.body.bookYear
-    const bookImageURL = req.body.bookImageURL
+    const bookImageURL = req.body.bookImageUrl
 
     const book = new Book({
         bookTitle:bookTitle,
@@ -38,26 +38,28 @@ app.get('/api/books', async (req, res) => {
     res.json(books)
 })
 
-app.delete("/api/books/:bookid", (req, res) => {
+app.post('/api/books/:_id', async (req,res) => {
+    const id =req.params._id
+
+    const updateBook = {
+        bookTitle: req.body.bookTitle,
+        bookGenre: req.body.bookGenre,
+        bookPublisher: req.body.bookPublisher,
+        bookYear: req.body.bookYear,
+        bookImageURL: req.body.bookImageURL,
+    }
+
+    const updated = await Book.findByIdAndUpdate(id, updateBook)
+    res.json(updated)
+})
+
+app.delete("/api/books/:bookid", async (req, res) => {
     const id = req.params.bookid;
-    const bookIndex = Book.findOneAndDelete({_id: id})
-      res.send(bookIndex)
+    await Book.findOneAndDelete(id)
+      res.redirect("/api/books")
     });
 
-  app.post("/api/post/update", (req, res) => {
-    const title = req.body.title;
-    const author = req.body.author;
-    const country = req.body.country;
-    const imgsrc = req.body.imgsrc;
   
-    const book = {
-      id: books.length + 1,
-      title: title,
-      author: author,
-      country: country,
-      imgsrc: imgsrc,
-    };
-  });
 
 app.listen(8080, () => {
     console.log('server running ')
