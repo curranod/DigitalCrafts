@@ -13,7 +13,12 @@ function App(props) {
   }, [])
 
   const fetchBooks = async () => {
-    const response = await fetch('http://localhost:8080/api/books')
+    const response = await fetch('http://localhost:8080/api/books', {
+      method: 'GET',
+      headers: {
+        'Authorization' : `Bearer ${Token}`
+      }
+    })
     const result = await response.json()
     setBooks(result)
   }

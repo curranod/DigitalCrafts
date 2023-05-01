@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
+const authenticate = require('./middlewares/authMiddleware')
+const jwt = require('jsonwebtoken');
 
 app.use(cors())
 app.use(express.json())
@@ -33,7 +35,7 @@ app.post('/api/add-book', async (req,res) => {
     res.json({"message": "success"})
 })
 
-app.get('/api/books', async (req, res) => {
+app.get('/api/books', authenticate, async (req, res) => {
     const books = await Book.find({})
     res.json(books)
 })
@@ -57,7 +59,34 @@ app.delete("/api/books/:bookid", async (req, res) => {
     const id = req.params.bookid;
     await Book.findOneAndDelete(id)
       res.redirect("/api/books")
-    });
+});
+
+app.post('/api/login', (req, res) => {
+    const { username, password } = req.body
+
+  User.findOne({ username })
+    .then(user => {
+      if (!user) {
+        return res.status(401).json({ success: false, message: 'Incorrect username or password' })
+      }
+
+      bcrypt.compare(password, user.password)
+        .then(result => {
+          if (!result) {
+            return res.status(401).json({ success: false, message: 'Incorrect username or password' })
+          }
+
+          const token = jwt.sign({ username }, 'SECRETKEY')
+          res.json({ success: true, token })
+        })
+        .catch(err => {
+          return res.status(500).json({ success: false, message: 'Internal server error' })
+        })
+    })
+    .catch(err => {
+      return res.status(500).json({ success: false, message: 'Internal server error' })
+    })
+})
 
   
 
