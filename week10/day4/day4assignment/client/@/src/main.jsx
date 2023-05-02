@@ -7,7 +7,9 @@ import { createStore } from "redux";
 import reducer from "./store/reducer";
 import { Provider } from "react-redux";
 import AddPage from './components/AddPage'
+import Register from './components/Register'
 import Updater from './components/Updater'
+import Signin from './components/Signin'
 
 const store = createStore(
   reducer,
@@ -21,6 +23,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/add-book" element={<AddPage />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/signin" element={<Signin />} />
           <Route path="/update-book/:_id/:title/:genre/:publisher/:year" element={< Updater />} />
         </Routes>
       </BrowserRouter>

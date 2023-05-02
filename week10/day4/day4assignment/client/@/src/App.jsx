@@ -9,14 +9,14 @@ function App(props) {
   const [books, setBooks] = useState([])
 
   useEffect(() => {
-    fetchBooks()
+    fetchBooks(localStorage.getItem("token"))
   }, [])
 
-  const fetchBooks = async () => {
+  const fetchBooks = async (token) => {
     const response = await fetch('http://localhost:8080/api/books', {
       method: 'GET',
       headers: {
-        'Authorization' : `Bearer ${Token}`
+        'Authorization' : `Bearer ${token}`
       }
     })
     const result = await response.json()
@@ -48,6 +48,7 @@ function App(props) {
         <Link to={`/update-book/${book._id}/${book.bookTitle}/${book.bookGenre}/${book.bookPublisher}/${book.bookYear}`}>
           <button >Update</button>
         </Link>
+        
       </li>
     )
   })

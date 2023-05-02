@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom"
 
 function AddBook() {
+    const navigate = useNavigate
 
     const [bookInfo, setBookInfo] = useState({
         bookTitle: "",
@@ -39,6 +41,9 @@ function AddBook() {
         <input type="text" placeholder="Year" name="bookYear" onChange = {handleInput} />
         {/* <input type="text" placeholder="IMageUrl" name="bookImageUrl" onChange = {handleInput} /> */}
         <button onClick = {sendState}>submit</button>
+        <Link to={"/register"}>
+          <button >Register</button>
+        </Link>
         </>
     )
 }
