@@ -10,18 +10,24 @@ import AddPage from './components/AddPage'
 import Register from './components/Register'
 import Updater from './components/Updater'
 import Signin from './components/Signin'
+import ProtectedRoute from './components/ProtectedRoute'
 
 const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
+const token = localStorage.getItem('jwtToken')
+if(token) {
+  store.dispatch({type: 'ON_LOGIN', payload: token})
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />} />
+          <Route path="/" element={<ProtectedRoute><App /></ ProtectedRoute >} />
           <Route path="/add-book" element={<AddPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/signin" element={<Signin />} />

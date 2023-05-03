@@ -1,5 +1,6 @@
 const initialState = {
-    cart: []
+    cart: [],
+    isAuthenticated: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -9,6 +10,11 @@ const reducer = (state = initialState, action) => {
           ...state,
           cart: state.cart.concat(action.payload)
         };
+      case 'ON_LOGIN':
+        return {
+          ...state,
+          isAuthenticated: action.payload != null
+        }
       default:
         return state;
     }

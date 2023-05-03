@@ -9,7 +9,7 @@ function App(props) {
   const [books, setBooks] = useState([])
 
   useEffect(() => {
-    fetchBooks(localStorage.getItem("token"))
+    fetchBooks(localStorage.getItem("jwtToken"))
   }, [])
 
   const fetchBooks = async (token) => {

@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom"
+import { connect } from "react-redux"
 
-function LogIn() {
+function LogIn(props) {
     const navigate = useNavigate()
     const [user, setUser] = useState({})
     const [message, setMessage] = useState("")
@@ -21,10 +22,10 @@ function LogIn() {
             },
             body: JSON.stringify(user)
         })
-
         const result = await response.json()
         if(result.success) {
             localStorage.setItem('jwtToken', result.token)
+            props.onLogin(result.token)
             navigate('/')
         }else { 
             setMessage(result.message) 
@@ -43,5 +44,11 @@ function LogIn() {
     )
 }
 
-export default LogIn
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLogin: (token) => dispatch({type: 'ON_LOGIN', payload: token})
+    }
+}
+
+export default connect (null, mapDispatchToProps)(LogIn)
 
